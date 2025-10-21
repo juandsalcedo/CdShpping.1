@@ -72,6 +72,29 @@ public class DomainEntityClient
         this.RegistrationDate = newRegistrationDate;
     }
     
+    // (C) Metodo constructor para crear nuevos clientes
+    /*public DomainEntityClient(string fullName, string email, string phone, string address)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+            throw new ArgumentException("Por favor coloque el nombre completo");
+        
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("Por favor coloque el email");
+        
+        if  (string.IsNullOrWhiteSpace(phone))
+            throw new ArgumentException("Por favor coloque el telefono");
+        
+        if (string.IsNullOrWhiteSpace(address))
+            throw new ArgumentException("Por favor coloque su direccion");
+        
+        this.FullName = fullName;
+        this.Email = email;
+        this.Phone = phone;
+        this.Address = address;
+        //this.RegistrationDate = DateTime.Now;
+        
+    }*/
+    
 }
 
 
