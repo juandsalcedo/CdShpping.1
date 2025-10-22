@@ -11,7 +11,14 @@ namespace MS_Clients.Application.Service
         void UpdateClientEmail(int id, string newEmail);
         void UpdateClientPhone(int id, string phone);
         void UpdateClientAddress(int id, string address);
-       // void UpdateRegistrationDate(int id, DateTime newRegistrationDate);
+        
+       // void UpdateRegistrationDate(int id, DateTime newRegistrationDate); ARREGLAR ERROR. 
+       
+       
+       //Datos necesarios para crear un cliente -->ClientServiceImp implementacion de logica 
+       void CreateClient(string fullName, string email, string phone, string  address);
+       
+       void DeleteClient(int id);
     }
 }
 

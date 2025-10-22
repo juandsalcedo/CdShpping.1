@@ -36,6 +36,7 @@ namespace MS_Clients.Domain
                 _repository.SaveChanges();
             }
         }
+
         public void UpdateClientEmail(int id, string newEmail)
         {
             // Busca el cliente usando el repositorio.
@@ -73,7 +74,7 @@ namespace MS_Clients.Domain
                 _repository.SaveChanges();
             }
         }
-        
+
         public void UpdateClientRegistrationDate(int id, DateTime newRegistrationDate)
         {
             var clientToUpdate = _repository.GetById(id);
@@ -84,7 +85,22 @@ namespace MS_Clients.Domain
                 _repository.SaveChanges();
             }
         }
+
+        public void CreateClient(string fullName, string email, string phone, string address)
+        {
+            var newClient = new DomainEntityClient(fullName, email, phone, address);
+            _repository.Add(newClient);
+            _repository.SaveChanges();
+        }
+
+        public void DeleteClient(int id)
+        {
+            _repository.Delete(id);
+            _repository.SaveChanges();
+        }
+
     }
+
 }
 
 

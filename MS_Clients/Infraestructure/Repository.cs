@@ -41,5 +41,20 @@ public class Repository: IClientRepository
         return _mapper.ToDomainClientDto(clientFromDb);
     }
 
-   
+    public void Add(DomainEntityClient client) 
+    {
+        //. Traduce del dominio a la infraestructura
+        var clientEnity = _mapper.toInfraestructureClientDto(client);
+        // Añade al contexto
+        _context.Clients.Add(clientEnity);
+    }
+
+    public void Delete(int id)
+    {
+        var clientToDelete = _context.Clients.Find(id);
+        if (clientToDelete != null)
+        {
+            _context.Clients.Remove(clientToDelete);
+        }
+    }
 }

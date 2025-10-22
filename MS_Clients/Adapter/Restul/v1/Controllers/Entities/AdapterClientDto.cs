@@ -1,5 +1,7 @@
 namespace MS_Clients.Adapter.Restul.v1.Controllers.Entities;
 
+
+// Paquete para mostrar datos del cliente
 public class AdapterClientDto
 {
     public int Id { get; set; }

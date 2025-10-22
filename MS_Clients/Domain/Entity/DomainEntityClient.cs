@@ -62,6 +62,7 @@ public class DomainEntityClient
         }
         this.Address = newAddress;
     }
+    
 
     public void ChangeRegistrationDate(DateTime newRegistrationDate)
     {
@@ -72,8 +73,10 @@ public class DomainEntityClient
         this.RegistrationDate = newRegistrationDate;
     }
     
+    public DomainEntityClient() {}
+    
     // (C) Metodo constructor para crear nuevos clientes
-    /*public DomainEntityClient(string fullName, string email, string phone, string address)
+    public DomainEntityClient(string fullName, string email, string phone, string address)
     {
         if (string.IsNullOrWhiteSpace(fullName))
             throw new ArgumentException("Por favor coloque el nombre completo");
@@ -91,9 +94,9 @@ public class DomainEntityClient
         this.Email = email;
         this.Phone = phone;
         this.Address = address;
-        //this.RegistrationDate = DateTime.Now;
+        this.RegistrationDate = DateTime.Now;
         
-    }*/
+    }
     
 }
 

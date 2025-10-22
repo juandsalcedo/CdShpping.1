@@ -12,4 +12,10 @@ public interface IClientRepository
         
     // Contrato: Debe saber cómo guardar los cambios.
     void SaveChanges();
+    
+    //funcion para añadir nuevo cliente
+    void Add (DomainEntityClient client);
+
+    void Delete(int id);
+    
 }

@@ -95,5 +95,43 @@ namespace MS_Clients.Adapter.Restul.v1.Controllers
                 return BadRequest(ex.Message);
             }
         }*/
+        [HttpPost]
+        public IActionResult CreateClient([FromBody] ClientCreateDto clientDto)
+        {
+            try
+            {
+                //  Le pasamos los datos del "formulario" (DTO) a nuestro servicio
+                _clientService.CreateClient(
+                    clientDto.fullName,
+                    clientDto.Email,
+                    clientDto.Phone,
+                    clientDto.Address
+                );
+                return Ok("Cliente creado exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                // Si las validaciones del constructor fallan, se captura el error aquí.
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClient(int id)
+        {
+            try
+            {
+                _clientService.DeleteClient(id);
+                return Ok($"El cliente con ID {id} ha sido eliminado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        
+        
     }
+    
 }
