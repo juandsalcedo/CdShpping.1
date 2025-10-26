@@ -98,6 +98,23 @@ public class DomainEntityClient
         
     }
     
+    //Metodos de combinancion
+
+    public string GetFullName()
+    {
+        return this.FullName;
+    }
+
+    public string DeteiledContac()
+    {
+        return $"Email: {this.Email} - Teléfono: {this.Phone}";
+    }
+    
+    public string ShippingAddress(string city, string country)
+    {
+        return string.Format("{0}, {1}, {2}", this.Address, city, country);
+    }
+    
 }
 
 
