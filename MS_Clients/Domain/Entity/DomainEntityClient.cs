@@ -98,7 +98,7 @@ public class DomainEntityClient
         
     }
     
-    //Metodos de combinancion
+    //Metodos de combinancion.
 
     public string GetFullName()
     {
