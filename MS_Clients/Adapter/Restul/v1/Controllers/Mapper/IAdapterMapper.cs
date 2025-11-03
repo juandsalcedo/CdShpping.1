@@ -1,16 +1,16 @@
-using MS_Clients.Adapter.Restul.v1.Controllers.Entities;
-using MS_Clients.Domain.Entity;
+using MS_Clients.Adapter.Restul.v1.Entities; 
+using MS_Clients.Domain.Entity;             
+using System.Collections.Generic;         
 
-namespace MS_Clients.Adapter.Restul.v1.Controllers.Mapper;
 
-public interface IAdapterMapper
+namespace MS_Clients.Adapter.Restul.v1.Mapper
 {
-   AdapterClientDto toAdapterClientDto(DomainEntityClient domainEntity);
-   
-   DomainEntityClient toDomainEntityDto(AdapterClientDto adapterClientDto);
-   
-   List<DomainEntityClient> toDomainEntityDtoList(List<AdapterClientDto> adapterClientDtoList);
-   
-   List<AdapterClientDto> toAdapterClientDtoList(List<DomainEntityClient> domainEntityList);
-   
+    public interface IAdapterMapper
+    {
+      
+        
+        AdapterClientDto ToAdapterClientDto(DomainEntityClient domainEntity);
+
+        List<AdapterClientDto> ToAdapterClientDtoList(List<DomainEntityClient> domainEntityList);
+    }
 }

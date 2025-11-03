@@ -1,14 +1,29 @@
+
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MS_Clients.Infraestructure.Entity;
 
-[Table("Clients")]
+
+[Table("user")]
 public class Client
 {
-    public int ClientId { get; set; }
-    public string ClientFullName { get; set; }
-    public string ClientEmail { get; set; }
-    public string ClientPhone { get; set; }
-    public string ClientAddress { get; set; }
-    public DateTime ClientRegistrationDate { get; set; }
+    [Key] //  Llave Primaria
+    [Column("IdUser")] 
+    public int IdUser { get; set; }
+
+    [Column("name")]
+    public string Name { get; set; }
+
+    [Column("lastName")]
+    public string LastName { get; set; }
+
+    [Column("email")]
+    public string Email { get; set; }
+
+    [Column("phoneNumber")]
+    public string PhoneNumber { get; set; }
+
+    [Column("address")]
+    public string Address { get; set; }
 }

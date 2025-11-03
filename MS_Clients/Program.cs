@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using MS_Clients.Adapter.Restul.v1.Controllers.Mapper;
+// --- ARREGLO 1: Corregimos la ruta al Mapper del Adaptador ---
+using MS_Clients.Adapter.Restul.v1.Mapper; 
 using MS_Clients.Application.Service;
 using MS_Clients.Domain;
 using MS_Clients.Infraestructure;
 using MS_Clients.Infraestructure.Mapper;
 using MS_Clients.Application; // Para que encuentre IClientRepository
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Configuración de la Base de Datos
 builder.Services.AddDbContext<ClientDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -18,14 +18,18 @@ builder.Services.AddDbContext<ClientDbContext>(options =>
 );
 
 
+
+// Conexiones de Infraestructura
 builder.Services.AddScoped<IClientRepository, Repository>();
 
+builder.Services.AddScoped<IInfraestructureMapper, InfraestructureMapperImp>();
 
-builder.Services.AddScoped<IInfraestructureMapper, InfrastructureMapperImp>();
+// Conexiones del Adaptador
 builder.Services.AddScoped<IAdapterMapper, AdapterMapperImp>();
 
-
+// Conexión del Servicio
 builder.Services.AddScoped<IClientService, ClientServiceImp>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

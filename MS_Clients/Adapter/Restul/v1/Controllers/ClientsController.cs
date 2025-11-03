@@ -1,137 +1,129 @@
-using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc;
-using MS_Clients.Adapter.Restul.v1.Controllers.Entities;
+using MS_Clients.Adapter.Restul.v1.Entities;
 using MS_Clients.Application.Service;
+using System;
+using MS_Clients.Adapter.Restul.v1.Mapper;
 
 namespace MS_Clients.Adapter.Restul.v1.Controllers
 {
-    [ApiController] 
-    [Route("api/v1/clients")] 
-    public class ClientsController: ControllerBase
+    [ApiController]
+    [Route("api/v1/clients")]
+    public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;
-        //llamar al mapper
+        private readonly IAdapterMapper _adapterMapper;
 
-        public ClientsController(IClientService clientService)
+        public ClientsController(IClientService clientService, IAdapterMapper adapterMapper)
         {
             _clientService = clientService;
+            _adapterMapper = adapterMapper;
         }
 
+        
         [HttpGet]
-        public ActionResult<List<AdapterClientDto>> GetAllClients()
+        public IActionResult GetAllClients()
         {
-            var clients = _clientService.GetAllClients();
-            return Ok(clients);
+            var domainClients = _clientService.GetAllClients();
+            var adapterClients = _adapterMapper.ToAdapterClientDtoList(domainClients);
+            return Ok(adapterClients);
         }
+
         
-        [HttpPatch("{id}/fullname")]
-        public IActionResult UpdateFullName(int id, [FromBody] string newFullName)
-        {
-            try
-            {
-                _clientService.UpdateClientFullName(id, newFullName);
-                return Ok($"El nombre del cliente con ID {id} fue actualizado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                // Si el nombre está vacío, devolvemos un error claro.
-                return BadRequest(ex.Message);
-            }
-        }
-        
-        [HttpPatch("{id}/email")]
-        public IActionResult UpdateEmail(int id, [FromBody] string newEmail)
-        {
-            try
-            {
-                _clientService.UpdateClientEmail(id, newEmail);
-                return Ok($"El email del cliente con ID {id} fue actualizado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                // captura cualquier error de las capas inferiores
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPatch("{id}/phone")]
-        public IActionResult UpdatePhone(int id, [FromBody] string newPhone)
-        {
-            try
-            {
-                _clientService.UpdateClientPhone(id, newPhone);
-                return Ok($"El telefono del cliente con ID {id} fue actualizado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPatch("{id}/address")]
-        public IActionResult UpdateAddress(int id, [FromBody] string newAddress)
-        {
-            try
-            {
-                _clientService.UpdateClientAddress(id, newAddress);
-                return Ok($"La direccion del cleinte con ID {id} fue actualizada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        /*[HttpPatch("{id}/registrationdate")]
-        public IActionResult UpdateRegistrationDate(int id, [FromBody] string newRegistrationDate)
-        {
-            try
-            {
-                _clientService.UpdateRegistrationDate(id, newRegistrationDate);
-                return Ok($"La fecha de registro del cliente con ID {id} fue actualizada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }*/
         [HttpPost]
         public IActionResult CreateClient([FromBody] ClientCreateDto clientDto)
         {
             try
             {
-                //  Le pasamos los datos del "formulario" (DTO) a nuestro servicio
                 _clientService.CreateClient(
-                    clientDto.fullName,
+                    clientDto.Name,
+                    clientDto.LastName,
                     clientDto.Email,
-                    clientDto.Phone,
+                    clientDto.PhoneNumber,
                     clientDto.Address
                 );
                 return Ok("Cliente creado exitosamente.");
             }
             catch (Exception ex)
             {
-                // Si las validaciones del constructor fallan, se captura el error aquí.
                 return BadRequest(ex.Message);
             }
         }
 
+        // ENDPOINTS DE ACTUALIZACIN
+
+        
+        [HttpPatch("{id}/name")]
+        public IActionResult UpdateName(int id, [FromBody] string newName)
+        {
+            try
+            {
+                _clientService.UpdateClientName(id, newName);
+                return Ok($"El nombre del cliente con ID {id} fue actualizado.");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+       
+        [HttpPatch("{id}/lastname")]
+        public IActionResult UpdateLastName(int id, [FromBody] string newLastName)
+        {
+            try
+            {
+                _clientService.UpdateClientLastName(id, newLastName);
+                return Ok($"El apellido del cliente con ID {id} fue actualizado.");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+       
+        [HttpPatch("{id}/email")]
+        public IActionResult UpdateEmail(int id, [FromBody] string newEmail)
+        {
+            try
+            {
+                _clientService.UpdateClientEmail(id, newEmail);
+                return Ok($"El email del cliente con ID {id} fue actualizado.");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+       
+        [HttpPatch("{id}/phonenumber")]
+        public IActionResult UpdatePhoneNumber(int id, [FromBody] string newPhone)
+        {
+            try
+            {
+                _clientService.UpdateClientPhoneNumber(id, newPhone);
+                return Ok($"El teléfono del cliente con ID {id} fue actualizado.");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+        
+        
+        [HttpPatch("{id}/address")]
+        public IActionResult UpdateAddress(int id, [FromBody] string newAddress)
+        {
+            try
+            {
+                _clientService.UpdateClientAddress(id, newAddress);
+                return Ok($"La dirección del cliente con ID {id} fue actualizada.");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+        
+        
         [HttpDelete("{id}")]
         public IActionResult DeleteClient(int id)
         {
             try
             {
                 _clientService.DeleteClient(id);
-                return Ok($"El cliente con ID {id} ha sido eliminado correctamente.");
+                return Ok($"Cliente con ID {id} ha sido eliminado correctamente.");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        
-        
-        
     }
-    
 }

@@ -1,15 +1,15 @@
-using MS_Clients.Application; // Para IClientRepository
-using MS_Clients.Application.Service; // Para IClientService
+using MS_Clients.Application;
+using MS_Clients.Application.Service;
 using MS_Clients.Domain.Entity;
+using System;
+using System.Collections.Generic;
 
 namespace MS_Clients.Domain
 {
     public class ClientServiceImp : IClientService
     {
-        // ARREGLO A: Ahora depende del "contrato" (el enchufe), no de la clase.
         private readonly IClientRepository _repository;
 
-        // ARREGLO B: El constructor ahora pide el "contrato".
         public ClientServiceImp(IClientRepository repository)
         {
             _repository = repository;
@@ -19,88 +19,75 @@ namespace MS_Clients.Domain
         {
             return _repository.GetAll();
         }
-
-        // ARREGLO C: La lógica correcta de la actualización.
-        public void UpdateClientFullName(int id, string newFullName)
+        
+        public void CreateClient(string name, string lastName, string email, string phoneNumber, string address)
         {
-            // Busca el cliente.
-            var clientToUpdate = _repository.GetById(id);
-
-            // Si existe...
-            if (clientToUpdate != null)
-            {
-                // ordena cambiar su nombre.
-                clientToUpdate.ChangeFullName(newFullName);
-
-                // guarda los cambios.
-                _repository.SaveChanges();
-            }
-        }
-
-        public void UpdateClientEmail(int id, string newEmail)
-        {
-            // Busca el cliente usando el repositorio.
-            var clientToUpdate = _repository.GetById(id);
-
-            // Si lo encontramos...
-            if (clientToUpdate != null)
-            {
-                // le ordenamos que cambie su email (usando el método del Dominio).
-                clientToUpdate.ChangeEmail(newEmail);
-
-                //se guardan los cambios.
-                _repository.SaveChanges();
-            }
-        }
-
-        public void UpdateClientPhone(int id, string phone)
-        {
-            var clientToUpdate = _repository.GetById(id);
-
-            if (clientToUpdate != null)
-            {
-                clientToUpdate.ChangePhone(phone);
-                _repository.SaveChanges();
-            }
-        }
-
-        public void UpdateClientAddress(int id, string address)
-        {
-            var clientToUpdate = _repository.GetById(id);
-
-            if (clientToUpdate != null)
-            {
-                clientToUpdate.ChangeAddress(address);
-                _repository.SaveChanges();
-            }
-        }
-
-        public void UpdateClientRegistrationDate(int id, DateTime newRegistrationDate)
-        {
-            var clientToUpdate = _repository.GetById(id);
-
-            if (clientToUpdate != null)
-            {
-                clientToUpdate.ChangeRegistrationDate(newRegistrationDate);
-                _repository.SaveChanges();
-            }
-        }
-
-        public void CreateClient(string fullName, string email, string phone, string address)
-        {
-            var newClient = new DomainEntityClient(fullName, email, phone, address);
+            var newClient = new DomainEntityClient(name, lastName, email, phoneNumber, address);
             _repository.Add(newClient);
             _repository.SaveChanges();
         }
 
+        public void UpdateClientName(int id, string name)
+        {
+            var clientToUpdate = _repository.GetById(id);
+            if (clientToUpdate != null)
+            {
+                clientToUpdate.ChangeName(name);
+                _repository.Update(clientToUpdate); 
+                _repository.SaveChanges();
+            }
+        }
+
+        public void UpdateClientLastName(int id, string lastName)
+        {
+            var clientToUpdate = _repository.GetById(id);
+            if (clientToUpdate != null)
+            {
+                clientToUpdate.ChangeLastName(lastName);
+                _repository.Update(clientToUpdate);
+                _repository.SaveChanges();
+            }
+        }
+        
+        public void UpdateClientEmail(int id, string newEmail)
+        {
+            var clientToUpdate = _repository.GetById(id);
+            if (clientToUpdate != null)
+            {
+                clientToUpdate.ChangeEmail(newEmail);
+                _repository.Update(clientToUpdate);
+                _repository.SaveChanges();
+            }
+        }
+        
+        public void UpdateClientPhoneNumber(int id, string newPhone)
+        {
+            var clientToUpdate = _repository.GetById(id);
+            if (clientToUpdate != null)
+            {
+                clientToUpdate.ChangePhoneNumber(newPhone);
+                _repository.Update(clientToUpdate);
+                _repository.SaveChanges();
+            }
+        }
+        
+        public void UpdateClientAddress(int id, string newAddress)
+        {
+            var clientToUpdate = _repository.GetById(id);
+            if (clientToUpdate != null)
+            {
+                clientToUpdate.ChangeAddress(newAddress);
+                _repository.Update(clientToUpdate);
+                _repository.SaveChanges();
+            }
+        }
+        
         public void DeleteClient(int id)
         {
             _repository.Delete(id);
             _repository.SaveChanges();
         }
-
     }
-
 }
 
 

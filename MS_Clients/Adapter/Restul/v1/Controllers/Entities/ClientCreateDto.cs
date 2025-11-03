@@ -1,10 +1,11 @@
-namespace MS_Clients.Adapter.Restul.v1.Controllers.Entities;
-
-// Formulario para ENVIAR 
-public class ClientCreateDto
+namespace MS_Clients.Adapter.Restul.v1.Entities
 {
-    public string fullName { get; set; }
-    public string Email { get; set; }
-    public string Phone { get; set; }   
-    public string Address { get; set; }
+    public class ClientCreateDto
+    {
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+    }
 }

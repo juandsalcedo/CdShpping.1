@@ -1,21 +1,15 @@
-namespace MS_Clients.Application;
 using MS_Clients.Domain.Entity;
+using System.Collections.Generic; 
 
-
-public interface IClientRepository
+namespace MS_Clients.Application
 {
-    // Contrato: Debe saber cómo traer todos los clientes.
-    List<DomainEntityClient> GetAll();
-
-    // Contrato: Debe saber cómo traer un cliente por su ID.
-    DomainEntityClient GetById(int id);
-        
-    // Contrato: Debe saber cómo guardar los cambios.
-    void SaveChanges();
-    
-    //funcion para añadir nuevo cliente
-    void Add (DomainEntityClient client);
-
-    void Delete(int id);
-    
+    public interface IClientRepository
+    {
+        List<DomainEntityClient> GetAll();
+        DomainEntityClient GetById(int id);
+        void SaveChanges();
+        void Add(DomainEntityClient client);
+        void Delete(int id);
+        void Update(DomainEntityClient client);
+    }
 }

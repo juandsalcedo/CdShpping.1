@@ -1,59 +1,45 @@
 using MS_Clients.Domain.Entity;
 using MS_Clients.Infraestructure.Entity;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace MS_Clients.Infraestructure.Mapper;
-
-public class InfrastructureMapperImp : IInfraestructureMapper
+namespace MS_Clients.Infraestructure.Mapper
 {
-
-    public DomainEntityClient ToDomainClientDto(Client client)
+    public class InfraestructureMapperImp : IInfraestructureMapper
     {
-        return new  DomainEntityClient()
+        //De Base de Datos (Client), hacia Dominio (DomainEntityClient)
+        public DomainEntityClient ToDomainClientDto(Client client)
         {
-            Id = client.ClientId,
-            FullName = client.ClientFullName,
-            Email = client.ClientEmail,
-            Phone = client.ClientPhone,
-            Address = client.ClientAddress,
-            RegistrationDate = client.ClientRegistrationDate
-        };
-    }
-
-    public List<DomainEntityClient> ToDomainClientDtos(List<Client> clients)
-    {
-        if (clients.Count == 0)
-        {
-            return new List<DomainEntityClient>();
+            return new DomainEntityClient
+            {
+                Id = client.IdUser, 
+                Name = client.Name,
+                LastName = client.LastName,
+                Email = client.Email,
+                PhoneNumber = client.PhoneNumber,
+                Address = client.Address
+               
+            };
         }
-        else
+
+        // De Dominio DomainEntityClient, hacia Base de Datos (Client)
+        public Client toInfraestructureClientDto(DomainEntityClient client)
+        {
+            return new Client
+            {
+                IdUser = client.Id, 
+                Name = client.Name,
+                LastName = client.LastName,
+                Email = client.Email,
+                PhoneNumber = client.PhoneNumber,
+                Address = client.Address
+                
+            };
+        }
+
+        public List<DomainEntityClient> ToDomainClientDtos(List<Client> clients)
         {
             return clients.Select(ToDomainClientDto).ToList();
         }
     }
-
-    public Client toInfraestructureClientDto(DomainEntityClient entity)
-    {
-        return new Client()
-        {
-            ClientId = entity.Id,
-            ClientFullName = entity.FullName,
-            ClientEmail = entity.Email,
-            ClientPhone = entity.Phone,
-            ClientAddress = entity.Address,
-            ClientRegistrationDate = entity.RegistrationDate,
-        };
-    }
-
-    public List<Client> toInfraestructureClientDtoList(List<DomainEntityClient> domainEntityList)
-    {
-        if (domainEntityList.Count == 0)
-        {
-            return new List<Client>();
-        }
-        else
-        {
-            return domainEntityList.Select(toInfraestructureClientDto).ToList();
-        }
-    }
-        
 }
